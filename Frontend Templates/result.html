@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Workout Plan - FitBuddy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed,
+                        #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+            padding: 35px 30px;
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .brand-header p {
+            color: #64748b;
+            font-size: 13.5px;
+            margin-top: 5px;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-info-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            margin-bottom: 22px;
+        }
+
+        .user-info-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            font-size: 13.5px;
+            color: #475569;
+        }
+
+        .info-grid strong {
+            color: #0f172a;
+        }
+
+        .plan-section h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        pre.formatted-plan {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 22px;
+            border: 1px solid #334155;
+        }
+
+        .tip-box {
+            background: #fefce8;
+            border: 1px solid #fef08a;
+            border-left: 5px solid #eab308;
+            border-radius: 8px;
+            padding: 15px 18px;
+            margin-bottom: 22px;
+        }
+
+        .tip-box h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 5px;
+        }
+
+        .tip-box p {
+            font-size: 13.5px;
+            color: #713f12;
+            line-height: 1.5;
+        }
+
+        .feedback-card {
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .feedback-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #334155;
+        }
+
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 9px 16px;
+            background: #e2e8f0;
+            color: #1e293b;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            margin-top: 22px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="brand-header">
+            <h1>🏋️ Your Personalized Workout Plan</h1>
+            <p>Tailored AI routine generated using Google Gemini Models</p>
+        </div>
+
+        {% if update_success %}
+        <div class="alert-success">
+            <span>✅ Your plan has been updated based on your feedback!</span>
+        </div>
+        {% endif %}
+
+        {% if error_message %}
+        <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; font-size: 13.5px;">
+            ⚠️ {{ error_message }}
+        </div>
+        {% endif %}
+
+        <!-- User Information Section -->
+        <div class="user-info-card">
+            <h3>User Information</h3>
+            <div class="info-grid">
+                <div><strong>Name:</strong> {{ username }}</div>
+                <div><strong>User ID:</strong> {{ user_id }}</div>
+                <div><strong>Age:</strong> {{ age }}</div>
+                <div><strong>Weight:</strong> {{ weight }} kg</div>
+                <div><strong>Goal:</strong> {{ goal }}</div>
+                <div><strong>Intensity:</strong> {{ intensity }}</div>
+            </div>
+        </div>
+
+        <!-- Workout Plan Section -->
+        <div class="plan-section">
+            <h3>📋 7-Day Workout Routine</h3>
+            <pre class="formatted-plan">{{ workout_plan }}</pre>
+        </div>
+
+        <!-- Nutrition / Recovery Tip Section -->
+        {% if nutrition_tip %}
+        <div class="tip-box">
+            <h4>💡 Nutrition Tip</h4>
+            <p>{{ nutrition_tip }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Original Plan Comparison (Visible after update) -->
+        {% if original_plan and update_success %}
+        <details style="margin-bottom: 22px; background: #f1f5f9; padding: 14px 18px; border-radius: 8px; border: 1px solid #cbd5e1;">
+            <summary style="font-weight: 600; cursor: pointer; color: #334155; font-size: 13.5px;">View Original Plan Before Feedback</summary>
+            <pre class="formatted-plan" style="margin-top: 10px; max-height: 300px;">{{ original_plan }}</pre>
+        </details>
+        {% endif %}
+
+        <!-- Feedback Form Section -->
+        <div class="feedback-card">
+            <h3>📝 Share Your Feedback</h3>
+            <form action="/submit-feedback" method="POST">
+                <div class="form-group">
+                    <label for="feedback_user_id">Your Unique User ID:</label>
+                    <input type="number" id="feedback_user_id" name="user_id" value="{{ user_id }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback">Your Feedback:</label>
+                    <textarea id="feedback" name="feedback" rows="3" placeholder="Let us know how we can improve your plan (e.g. 'Add yoga on day 4', 'More focus on chest & cardio')..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Feedback</button>
+            </form>
+        </div>
+
+        <!-- Navigation Footers -->
+        <div class="nav-links">
+            <a href="/" class="btn-secondary">⬅️ Create Another Plan</a>
+            <a href="/view-all-users" class="btn-secondary">👥 Admin Dashboard</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

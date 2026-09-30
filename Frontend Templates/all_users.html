@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy - All Users & Workout Plans</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            background: #0f172a;
+            display: flex; justify-content: center; padding: 40px 15px; color: #1e293b;
+        }
+        .container {
+            width: 100%; max-width: 1200px; background: #ffffff;
+            border-radius: 16px; padding: 35px 30px;
+        }
+        .brand-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #e2e8f0; padding-bottom: 18px; margin-bottom: 20px;
+        }
+        .btn-secondary {
+            display: inline-block; padding: 8px 14px; background: #e2e8f0;
+            color: #1e293b; text-decoration: none; border-radius: 8px; font-size: 13px;
+        }
+        .btn-danger {
+            padding: 6px 12px; background: #ef4444; color: white;
+            border: none; border-radius: 6px; font-size: 12px; cursor: pointer;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #2563eb; color: #ffffff; text-align: left; padding: 10px 12px; }
+        td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        tr:hover { background: #f8fafc; }
+        pre {
+            background: #0f172a; color: #f8fafc; padding: 8px 10px; border-radius: 6px;
+            font-size: 11px; max-width: 320px; max-height: 200px; overflow-y: auto; white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-header">
+            <div>
+                <h2>📊 FitBuddy - All Users & Workout Plans</h2>
+            </div>
+            <div>
+                <a href="/" class="btn-secondary">➕ New User Plan</a>
+            </div>
+        </div>
+        {% if users and users|length > 0 %}
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th><th>Name</th><th>Age</th><th>Weight</th><th>Goal</th><th>Intensity</th><th>Original Plan</th><th>Updated Plan</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td><td>{{ user.name }}</td><td>{{ user.age }}</td><td>{{ user.weight }} kg</td>
+                        <td>{{ user.goal }}</td><td>{{ user.intensity }}</td>
+                        <td><pre>{{ user.original_plan }}</pre></td>
+                        <td>
+                            {% if user.updated_plan and user.updated_plan != 'Not updated' %}
+                                <pre>{{ user.updated_plan }}</pre>
+                            {% else %}
+                                <span style="color: #94a3b8; font-style: italic;">Not updated</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="/delete-user/{{ user.id }}" method="POST" onsubmit="return confirm('Delete this user?');">
+                                <button type="submit" class="btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="color: #64748b; text-align: center; padding: 30px;">No users saved yet.</p>
+        {% endif %}
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="/" class="btn-secondary">⬅️ Back to Workout Generator</a>
+        </div>
+    </div>
+</body>
+</html>
